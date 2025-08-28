@@ -1,5 +1,9 @@
 name: 'Docker Build & Publish'
 description: 'Builds a Docker image and pushes it to GitHub Container Registry with the commit hash as the tag.'
+inputs:
+  github_token:
+    description: 'GitHub token for authentication'
+    required: true
 runs:
   using: "composite"
   steps:
@@ -20,7 +24,7 @@ runs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
+        password: ${{ inputs.github_token }}
     - name: Build Docker image
       shell: bash
       run: |
