@@ -1,7 +1,7 @@
 name: 'Docker Build & Publish'
 description: 'Builds a Docker image and pushes it to GitHub Container Registry with the commit hash as the tag.'
 inputs:
-  github_token:
+  github-token:
     description: 'GitHub token for authentication'
     required: true
 runs:

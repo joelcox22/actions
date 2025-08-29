@@ -18,9 +18,12 @@ A GitHub composite action that runs semantic-release with minimal configuration 
 
 ```yaml
 name: Release
-on:
-  push:
-    branches: [main, develop, feature/*]
+on: push
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
 
 jobs:
   release:
