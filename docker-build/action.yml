@@ -24,7 +24,7 @@ runs:
       with:
         registry: ghcr.io
         username: ${{ github.actor }}
-        password: ${{ inputs.github_token }}
+        password: ${{ inputs.github-token }}
     - name: Build Docker image
       shell: bash
       run: |
