@@ -5,10 +5,6 @@ branding:
   color: 'green'
 
 inputs:
-  github-token:
-    description: 'GitHub token for authentication'
-    required: true
-    default: ${{ github.token }}
   dry-run:
     description: 'Run in dry-run mode (no actual release)'
     required: false
@@ -112,7 +108,7 @@ runs:
       id: semantic-release
       working-directory: ${{ inputs.working-directory }}
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        GITHUB_TOKEN: ${{ github.token }}
         GIT_AUTHOR_NAME: github-actions[bot]
         GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
         GIT_COMMITTER_NAME: github-actions[bot]
