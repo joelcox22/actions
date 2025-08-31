@@ -39,7 +39,7 @@ async function run() {
       ],
       plugins: [
         [ '@semantic-release/commit-analyzer', { 
-          // Use minimal configuration with just release rules
+          // Use the most basic configuration possible
           releaseRules: [
             { breaking: true, release: 'major' },
             { type: 'feat', release: 'minor' },
@@ -52,9 +52,11 @@ async function run() {
             { type: 'build', release: 'patch' },
             { type: 'ci', release: 'patch' },
             { type: 'chore', release: 'patch' }
-          ]
+          ],
+          // Explicitly disable preset to avoid any template loading
+          preset: false
         } ],
-        [ '@semantic-release/release-notes-generator' ],  // Use default configuration
+        // '@semantic-release/release-notes-generator',  // Temporarily disable to isolate template issue
         [ '@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' } ],
         [ '@semantic-release/github', { assets: [] } ]
       ],
