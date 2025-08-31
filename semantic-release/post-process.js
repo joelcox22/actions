@@ -25,7 +25,7 @@ var __bundled_plugins = {};
 // Override module resolution for bundled packages
 const originalRequire = require;
 require = function(id) {
-  if (id === 'conventional-changelog-conventionalcommits' && global.__bundled_plugins && global.__bundled_plugins[id]) {
+  if ((id === 'conventional-changelog-conventionalcommits' || id === 'conventional-changelog-angular') && global.__bundled_plugins && global.__bundled_plugins[id]) {
     return global.__bundled_plugins[id];
   }
   return originalRequire.apply(this, arguments);
@@ -90,6 +90,12 @@ const loadPluginReplacement = `async function loadPlugin({ cwd }, name, pluginsP
   if (name === 'conventional-changelog-conventionalcommits' || name === 'conventionalcommits') {
     if (global.__bundled_plugins && global.__bundled_plugins['conventional-changelog-conventionalcommits']) {
       return global.__bundled_plugins['conventional-changelog-conventionalcommits'];
+    }
+  }
+  
+  if (name === 'conventional-changelog-angular' || name === 'angular') {
+    if (global.__bundled_plugins && global.__bundled_plugins['conventional-changelog-angular']) {
+      return global.__bundled_plugins['conventional-changelog-angular'];
     }
   }
   

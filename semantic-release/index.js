@@ -11,6 +11,7 @@ const changelog = require('@semantic-release/changelog');
 const githubPlugin = require('@semantic-release/github');
 const gitPlugin = require('@semantic-release/git');
 const conventionalChangelog = require('conventional-changelog-conventionalcommits');
+const angularChangelog = require('conventional-changelog-angular');
 
 // Register bundled plugins globally so the loadPlugin function can find them
 global.__bundled_plugins = {
@@ -19,7 +20,8 @@ global.__bundled_plugins = {
   '@semantic-release/changelog': changelog,
   '@semantic-release/github': githubPlugin,
   '@semantic-release/git': gitPlugin,
-  'conventional-changelog-conventionalcommits': conventionalChangelog
+  'conventional-changelog-conventionalcommits': conventionalChangelog,
+  'conventional-changelog-angular': angularChangelog
 };
 
 async function run() {
