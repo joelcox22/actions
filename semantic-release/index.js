@@ -1,7 +1,7 @@
 
 const core = require('@actions/core');
 const github = require('@actions/github');
-const semanticRelease = require('semantic-release');
+const semanticRelease = require('semantic-release').default || require('semantic-release');
 
 async function run() {
   try {
