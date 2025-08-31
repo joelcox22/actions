@@ -50,10 +50,12 @@ async function run() {
     };
 
     // Set up environment variables
-    // GITHUB_TOKEN is automatically available in GitHub Actions environment
-    if (!process.env.GITHUB_TOKEN) {
-      throw new Error('GITHUB_TOKEN environment variable is not available. This should be automatically provided by GitHub Actions.');
+    // Get GitHub token from input (defaults to github.token) or environment
+    const githubToken = core.getInput('github-token') || process.env.GITHUB_TOKEN;
+    if (!githubToken) {
+      throw new Error('GitHub token is required but not available. Please ensure your workflow has proper permissions.');
     }
+    process.env.GITHUB_TOKEN = githubToken;
     process.env.GIT_AUTHOR_NAME = 'github-actions[bot]';
     process.env.GIT_AUTHOR_EMAIL = '41898282+github-actions[bot]@users.noreply.github.com';
     process.env.GIT_COMMITTER_NAME = 'github-actions[bot]';
