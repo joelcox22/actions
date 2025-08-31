@@ -3,6 +3,15 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const semanticRelease = require('semantic-release').default || require('semantic-release');
 
+// Force bundling of semantic-release plugins by requiring them
+// This ensures they're available when semantic-release tries to load them dynamically
+require('@semantic-release/commit-analyzer');
+require('@semantic-release/release-notes-generator');
+require('@semantic-release/changelog');
+require('@semantic-release/github');
+require('@semantic-release/git');
+require('conventional-changelog-conventionalcommits');
+
 async function run() {
   try {
     const dryRun = core.getInput('dry-run') === 'true';
