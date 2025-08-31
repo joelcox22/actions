@@ -10,8 +10,6 @@ const releaseNotesGenerator = require('@semantic-release/release-notes-generator
 const changelog = require('@semantic-release/changelog');
 const githubPlugin = require('@semantic-release/github');
 const gitPlugin = require('@semantic-release/git');
-const conventionalChangelog = require('conventional-changelog-conventionalcommits');
-const angularChangelog = require('conventional-changelog-angular');
 
 // Register bundled plugins globally so the loadPlugin function can find them
 global.__bundled_plugins = {
@@ -19,9 +17,7 @@ global.__bundled_plugins = {
   '@semantic-release/release-notes-generator': releaseNotesGenerator,
   '@semantic-release/changelog': changelog,
   '@semantic-release/github': githubPlugin,
-  '@semantic-release/git': gitPlugin,
-  'conventional-changelog-conventionalcommits': conventionalChangelog,
-  'conventional-changelog-angular': angularChangelog
+  '@semantic-release/git': gitPlugin
 };
 
 async function run() {
@@ -43,10 +39,7 @@ async function run() {
       ],
       plugins: [
         [ '@semantic-release/commit-analyzer', { 
-          // Use explicit parsing rules instead of presets to avoid module resolution issues
-          parserOpts: {
-            noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES', 'BREAKING']
-          },
+          // Use minimal configuration with just release rules
           releaseRules: [
             { breaking: true, release: 'major' },
             { type: 'feat', release: 'minor' },
@@ -61,15 +54,7 @@ async function run() {
             { type: 'chore', release: 'patch' }
           ]
         } ],
-        [ '@semantic-release/release-notes-generator', { 
-          // Use explicit configuration instead of preset
-          writerOpts: {
-            groupBy: 'type',
-            commitGroupsSort: 'title',
-            commitsSort: ['scope', 'subject'],
-            noteGroupsSort: 'title'
-          }
-        } ],
+        [ '@semantic-release/release-notes-generator' ],  // Use default configuration
         [ '@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' } ],
         [ '@semantic-release/github', { assets: [] } ]
       ],
