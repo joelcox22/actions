@@ -1,7 +1,7 @@
 
-import * as core from '@actions/core';
-import * as github from '@actions/github';
-import semanticRelease from 'semantic-release';
+const core = require('@actions/core');
+const github = require('@actions/github');
+const semanticRelease = require('semantic-release');
 
 async function run() {
   try {
