@@ -25,7 +25,10 @@ outputs:
     description: 'The new release git tag (with v prefix)'
   new-release-published:
     description: 'Whether a new release was published'
+  will-release:
+    description: 'Whether a new release will be created (from dry-run analysis)'
 
 runs:
   using: 'node24'
   main: 'dist/index.cjs'
+  post: 'dist/index.cjs'
