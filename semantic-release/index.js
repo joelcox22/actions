@@ -5,12 +5,22 @@ const semanticRelease = require('semantic-release').default || require('semantic
 
 // Force bundling of semantic-release plugins by requiring them
 // This ensures they're available when semantic-release tries to load them dynamically
-require('@semantic-release/commit-analyzer');
-require('@semantic-release/release-notes-generator');
-require('@semantic-release/changelog');
-require('@semantic-release/github');
-require('@semantic-release/git');
-require('conventional-changelog-conventionalcommits');
+const commitAnalyzer = require('@semantic-release/commit-analyzer');
+const releaseNotesGenerator = require('@semantic-release/release-notes-generator');
+const changelog = require('@semantic-release/changelog');
+const githubPlugin = require('@semantic-release/github');
+const gitPlugin = require('@semantic-release/git');
+const conventionalChangelog = require('conventional-changelog-conventionalcommits');
+
+// Register bundled plugins globally so the loadPlugin function can find them
+global.__bundled_plugins = {
+  '@semantic-release/commit-analyzer': commitAnalyzer,
+  '@semantic-release/release-notes-generator': releaseNotesGenerator,
+  '@semantic-release/changelog': changelog,
+  '@semantic-release/github': githubPlugin,
+  '@semantic-release/git': gitPlugin,
+  'conventional-changelog-conventionalcommits': conventionalChangelog
+};
 
 async function run() {
   try {
