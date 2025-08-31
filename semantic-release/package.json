@@ -2,7 +2,6 @@
   "name": "semantic-release-action",
   "version": "1.0.0",
   "main": "index.js",
-  "type": "module",
   "license": "MIT",
   "scripts": {
     "build": "esbuild index.js --bundle --platform=node --target=node24 --format=cjs --outfile=dist/index.cjs --external:@swc/core --external:typescript"
