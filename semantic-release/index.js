@@ -40,8 +40,20 @@ async function run() {
         { name: '*', prerelease: true }
       ],
       plugins: [
-        [ '@semantic-release/commit-analyzer', { preset: 'conventionalcommits' } ],
-        [ '@semantic-release/release-notes-generator', { preset: 'conventionalcommits' } ],
+        [ '@semantic-release/commit-analyzer', { 
+          preset: 'angular',  // Use angular preset instead of conventionalcommits to avoid the module resolution issue
+          releaseRules: [
+            { type: 'feat', release: 'minor' },
+            { type: 'fix', release: 'patch' },
+            { type: 'perf', release: 'patch' },
+            { type: 'docs', scope: 'README', release: 'patch' },
+            { type: 'refactor', release: 'patch' },
+            { type: 'style', release: 'patch' }
+          ]
+        } ],
+        [ '@semantic-release/release-notes-generator', { 
+          preset: 'angular'  // Use angular preset instead
+        } ],
         [ '@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' } ],
         [ '@semantic-release/github', { assets: [] } ]
       ],
