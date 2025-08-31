@@ -68,14 +68,26 @@ async function run() {
     let published = false;
     let version = '';
     let tag = '';
-    if (result && result.releases && result.releases.length > 0) {
+    
+    if (result && result.nextRelease) {
+      // New release was created
       published = true;
+      version = result.nextRelease.version;
+      tag = result.nextRelease.gitTag;
+    } else if (result && result.lastRelease) {
+      // No new release, but we have info about the last release
       version = result.lastRelease.version;
       tag = result.lastRelease.gitTag;
     }
+    
     core.setOutput('new-release-published', published ? 'true' : 'false');
     core.setOutput('new-release-version', version || '');
     core.setOutput('new-release-git-tag', tag || '');
+    
+    // Also set as environment variable for downstream actions
+    if (version) {
+      core.exportVariable('NEW_RELEASE_VERSION', version);
+    }
   } catch (error) {
     core.setFailed(error.message);
   }
