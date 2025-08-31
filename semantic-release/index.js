@@ -38,24 +38,7 @@ async function run() {
         { name: '*', prerelease: true }
       ],
       plugins: [
-        [ '@semantic-release/commit-analyzer', { 
-          // Use the most basic configuration possible
-          releaseRules: [
-            { breaking: true, release: 'major' },
-            { type: 'feat', release: 'minor' },
-            { type: 'fix', release: 'patch' },
-            { type: 'perf', release: 'patch' },
-            { type: 'docs', release: 'patch' },
-            { type: 'style', release: 'patch' },
-            { type: 'refactor', release: 'patch' },
-            { type: 'test', release: 'patch' },
-            { type: 'build', release: 'patch' },
-            { type: 'ci', release: 'patch' },
-            { type: 'chore', release: 'patch' }
-          ],
-          // Explicitly disable preset to avoid any template loading
-          preset: false
-        } ],
+        '@semantic-release/commit-analyzer',  // Use with absolutely no configuration
         // '@semantic-release/release-notes-generator',  // Temporarily disable to isolate template issue
         [ '@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' } ],
         [ '@semantic-release/github', { assets: [] } ]
