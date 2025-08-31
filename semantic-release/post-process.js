@@ -22,6 +22,15 @@ var __filename_polyfill = __filename;
 // Plugin registry for bundled plugins
 var __bundled_plugins = {};
 
+// Override module resolution for bundled packages
+const originalRequire = require;
+require = function(id) {
+  if (id === 'conventional-changelog-conventionalcommits' && global.__bundled_plugins && global.__bundled_plugins[id]) {
+    return global.__bundled_plugins[id];
+  }
+  return originalRequire.apply(this, arguments);
+};
+
 `;
 
 // Fix all import_meta variables that are being set to empty objects
@@ -75,6 +84,13 @@ const loadPluginReplacement = `async function loadPlugin({ cwd }, name, pluginsP
   // Use bundled plugins instead of dynamic imports
   if (global.__bundled_plugins && global.__bundled_plugins[name]) {
     return global.__bundled_plugins[name];
+  }
+  
+  // Special handling for conventional changelog presets
+  if (name === 'conventional-changelog-conventionalcommits' || name === 'conventionalcommits') {
+    if (global.__bundled_plugins && global.__bundled_plugins['conventional-changelog-conventionalcommits']) {
+      return global.__bundled_plugins['conventional-changelog-conventionalcommits'];
+    }
   }
   
   // Fallback to original logic for non-bundled plugins
