@@ -43,18 +43,32 @@ async function run() {
       ],
       plugins: [
         [ '@semantic-release/commit-analyzer', { 
-          preset: 'angular',  // Use angular preset instead of conventionalcommits to avoid the module resolution issue
+          // Use explicit parsing rules instead of presets to avoid module resolution issues
+          parserOpts: {
+            noteKeywords: ['BREAKING CHANGE', 'BREAKING CHANGES', 'BREAKING']
+          },
           releaseRules: [
+            { breaking: true, release: 'major' },
             { type: 'feat', release: 'minor' },
             { type: 'fix', release: 'patch' },
             { type: 'perf', release: 'patch' },
-            { type: 'docs', scope: 'README', release: 'patch' },
+            { type: 'docs', release: 'patch' },
+            { type: 'style', release: 'patch' },
             { type: 'refactor', release: 'patch' },
-            { type: 'style', release: 'patch' }
+            { type: 'test', release: 'patch' },
+            { type: 'build', release: 'patch' },
+            { type: 'ci', release: 'patch' },
+            { type: 'chore', release: 'patch' }
           ]
         } ],
         [ '@semantic-release/release-notes-generator', { 
-          preset: 'angular'  // Use angular preset instead
+          // Use explicit configuration instead of preset
+          writerOpts: {
+            groupBy: 'type',
+            commitGroupsSort: 'title',
+            commitsSort: ['scope', 'subject'],
+            noteGroupsSort: 'title'
+          }
         } ],
         [ '@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' } ],
         [ '@semantic-release/github', { assets: [] } ]
