@@ -67,7 +67,7 @@ async function run() {
       ],
       plugins: [
         '@semantic-release/commit-analyzer',  // Use with absolutely no configuration
-        // '@semantic-release/release-notes-generator',  // Temporarily disable to isolate template issue
+        '@semantic-release/release-notes-generator',  // Temporarily disable to isolate template issue
         [ '@semantic-release/changelog', { changelogFile: 'CHANGELOG.md' } ],
         [ '@semantic-release/github', { assets: [] } ]
       ],
