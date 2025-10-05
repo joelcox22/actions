@@ -5,6 +5,14 @@ inputs:
     description: 'The container registry to push the image to.'
     required: false
     default: 'ghcr.io'
+  registry_username:
+    description: 'The username for the container registry.'
+    required: false
+    default: '${{ github.actor }}'
+  registry_password:
+    description: 'The password or token for the container registry.'
+    required: false
+    default: '${{ github.token }}'
 runs:
   using: "composite"
   steps:
@@ -29,8 +37,8 @@ runs:
       uses: docker/login-action@v3
       with:
         registry: ${{ inputs.registry }}
-        username: ${{ github.actor }}
-        password: ${{ github.token }}
+        username: ${{ inputs.registry_username }}
+        password: ${{ inputs.registry_password }}
 
     - name: Build Docker image
       shell: bash
