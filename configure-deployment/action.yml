@@ -1,0 +1,13 @@
+name: 'configure-deployment'
+
+description: 'Configure deployment in a GitOps repository.'
+
+runs:
+  using: "composite"
+  steps:
+    - uses: denoland/setup-deno@v2
+      with:
+        deno-version: v2.x
+    - name: test
+      shell: bash
+      run: ${ github.action_path }/test.ts
