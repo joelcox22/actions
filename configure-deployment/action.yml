@@ -2,12 +2,28 @@ name: 'configure-deployment'
 
 description: 'Configure deployment in a GitOps repository.'
 
+inputs:
+  gitops-repo:
+    description: 'The GitOps repository to configure deployment in.'
+    required: true
+  gitops-repo-token:
+    description: 'The token to use to access the GitOps repository.'
+    required: true
+
 runs:
   using: "composite"
   steps:
+
     - uses: denoland/setup-deno@v2
       with:
         deno-version: v2.x
+
+    - uses: actions/checkout@v5
+      with:
+        repository: ${{ inputs.gitops-repo }}
+        token: ${{ inputs.gitops-repo-token }}
+        path: gitops-repo
+
     - name: test
       shell: bash
       run: ${{ github.action_path }}/test.ts
