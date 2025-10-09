@@ -5,7 +5,8 @@ description: 'Configure deployment in a GitOps repository.'
 inputs:
   gitops-repo:
     description: 'The GitOps repository to configure deployment in.'
-    required: true
+    required: false
+    default: ${{ github.repository_owner }}/easygitops
   gitops-repo-token:
     description: 'The token to use to access the GitOps repository.'
     required: true
