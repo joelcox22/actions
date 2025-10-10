@@ -3,11 +3,13 @@
 import { join } from '@std/path';
 import * as yaml from '@std/yaml';
 
-const cluster = 'linode';
-const project = Deno.env.get('GITHUB_REPOSITORY')!;
-const id = Deno.env.get('GITHUB_REF')!.replace('refs/heads/', '').replace(/\//g, '-');
+const [owner, repoName] = Deno.env.get('GITHUB_REPOSITORY')!.split('/');
 
-const dir = join('gitops-repo', 'apps', cluster, project, id);
+const cluster = 'linode';
+const project = repoName;
+const environment = Deno.env.get('GITHUB_REF')!.replace('refs/heads/', '').replace(/\//g, '-');
+
+const dir = join('gitops-repo', 'apps', cluster, project, environment);
 const configFile = join(dir, 'app.yml');
 
 await Deno.mkdir(dir, { recursive: true });
@@ -21,6 +23,6 @@ try {
     console.log('No existing config file');
 }
 
-config.image = `ghcr.io/${Deno.env.get('GITHUB_REPOSITORY')}:${Deno.env.get('GITHUB_SHA')}`;
+config.image = `ghcr.io/${owner}/${repoName}:${Deno.env.get('GITHUB_SHA')}`;
 
-Deno.writeTextFile(join(dir, 'app.yml'), yaml.stringify(config));
+Deno.writeTextFile(join(dir, 'values.yml'), yaml.stringify(config));

@@ -36,8 +36,10 @@ runs:
     - shell: bash
       working-directory: gitops-repo
       run: |
+        set -ex
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@users.noreply.github.com"
         git add .
         git commit -m "Configure deployment for ${{ github.repository }}" || echo "No changes to commit"
         git push
+        cat $GITHUB_ENV
