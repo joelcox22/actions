@@ -19,12 +19,25 @@ runs:
       with:
         deno-version: v2.x
 
+    - name: install action dependencies
+      shell: bash
+      working-directory: ${{ github.action_path }}
+      run: deno install
+
     - uses: actions/checkout@v5
       with:
         repository: ${{ inputs.gitops-repo }}
         token: ${{ inputs.gitops-repo-token }}
         path: gitops-repo
 
-    - name: test
-      shell: bash
+    - shell: bash
       run: ${{ github.action_path }}/test.ts
+
+    - shell: bash
+      working-directory: gitops-repo
+      run: |
+        git config --global user.name "github-actions[bot]"
+        git config --global user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git commit -m "Configure deployment for ${{ github.repository }}" || echo "No changes to commit"
+        git push

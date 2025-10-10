@@ -1,17 +1,26 @@
 #!/usr/bin/env -S deno run --allow-all
 
-const files = Deno.readDir('.');
+import { join } from '@std/path';
+import * as yaml from '@std/yaml';
 
-console.log('files in current directory:');
+const cluster = 'test';
+const project = 'hello'
+const id = 'branch_goes_here';
 
-for await (const file of files) {
-    console.log(file.name);
+const dir = join('gitops-repo', 'apps', cluster, project, id);
+const configFile = join(dir, 'app.yml');
+
+await Deno.mkdir(dir, { recursive: true });
+
+let config: Record<string, unknown> = {};
+
+try {
+    const currentConfigText = await Deno.readTextFile(configFile);
+    config = yaml.parse(currentConfigText) as Record<string, unknown>;
+} catch (_err) {
+    console.log('No existing config file');
 }
 
-console.log('files in gitops-repo directory:');
+config.image = `ghcr.io/${Deno.env.get('GITHUB_REPOSITORY')}:${Deno.env.get('GITHUB_SHA')}`;
 
-const gitopsFiles = Deno.readDir('./gitops-repo');
-
-for await (const file of gitopsFiles) {
-    console.log(file.name);
-}
+Deno.writeTextFile(join(dir, 'app.yml'), yaml.stringify(config));
