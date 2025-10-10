@@ -3,9 +3,9 @@
 import { join } from '@std/path';
 import * as yaml from '@std/yaml';
 
-const cluster = 'test';
-const project = 'hello'
-const id = 'branch_goes_here';
+const cluster = 'linode';
+const project = Deno.env.get('GITHUB_REPOSITORY')!;
+const id = Deno.env.get('GITHUB_REF')!.replace('refs/heads/', '').replace(/\//g, '-');
 
 const dir = join('gitops-repo', 'apps', cluster, project, id);
 const configFile = join(dir, 'app.yml');
