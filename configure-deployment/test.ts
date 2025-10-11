@@ -5,12 +5,13 @@ import * as yaml from '@std/yaml';
 
 const [owner, repoName] = Deno.env.get('GITHUB_REPOSITORY')!.split('/');
 
+const blueprint = 'app'; // fixme
 const cluster = 'linode';
 const project = repoName;
-const environment = Deno.env.get('GITHUB_REF')!.replace('refs/heads/', '').replace(/\//g, '-');
+const branch = Deno.env.get('GITHUB_REF')!.replace('refs/heads/', '').replace(/\//g, '-');
 
-const dir = join('gitops-repo', 'apps', cluster, project, environment);
-const configFile = join(dir, 'app.yml');
+const dir = join('gitops-repo', 'blueprints', blueprint, 'deployments', cluster, project, branch);
+const configFile = join(dir, 'app.yaml');
 
 await Deno.mkdir(dir, { recursive: true });
 
@@ -25,4 +26,4 @@ try {
 
 config.image = `ghcr.io/${owner}/${repoName}:${Deno.env.get('NEW_RELEASE_VERSION')}`;
 
-Deno.writeTextFile(join(dir, 'values.yml'), yaml.stringify(config));
+Deno.writeTextFile(join(dir, 'values.yaml'), yaml.stringify(config));
