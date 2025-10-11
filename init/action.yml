@@ -7,3 +7,12 @@ runs:
       with:
         fetch-depth: 0
         token: ${{ github.token }}
+
+    - uses: denoland/setup-deno@v2
+      with:
+        deno-version: v2.x
+
+    - name: install action dependencies
+      shell: bash
+      working-directory: ${{ github.action_path }}/..
+      run: deno install

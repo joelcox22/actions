@@ -15,15 +15,6 @@ runs:
   using: "composite"
   steps:
 
-    - uses: denoland/setup-deno@v2
-      with:
-        deno-version: v2.x
-
-    - name: install action dependencies
-      shell: bash
-      working-directory: ${{ github.action_path }}
-      run: deno install
-
     - uses: actions/checkout@v5
       with:
         repository: ${{ inputs.gitops-repo }}
