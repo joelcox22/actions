@@ -6,5 +6,4 @@ import { join } from 'node:path';
 
 spawnSync(join(import.meta.dirname, 'configure-deployment.ts'), {
   stdio: 'inherit',
-  env: Deno.env.toObject(),
 });
