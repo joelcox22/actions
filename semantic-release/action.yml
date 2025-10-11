@@ -34,3 +34,7 @@ runs:
     - name: semantic-release
       shell: bash
       run: ${{ github.action_path }}/index.ts
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        DRY_RUN: ${{ inputs.dry-run }}
+        WORKING_DIRECTORY: ${{ inputs.working-directory }}
