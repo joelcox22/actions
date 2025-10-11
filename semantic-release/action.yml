@@ -29,12 +29,5 @@ outputs:
     description: 'Whether a new release will be created (from dry-run analysis)'
 
 runs:
-  using: 'composite'
-  steps:
-    - name: semantic-release
-      shell: bash
-      run: ${{ github.action_path }}/index.ts
-      env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
-        DRY_RUN: ${{ inputs.dry-run }}
-        WORKING_DIRECTORY: ${{ inputs.working-directory }}
+  using: 'node24'
+  main: 'index.js'
