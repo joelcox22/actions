@@ -44,7 +44,13 @@ async function run() {
         { name: '*', prerelease: true }
       ],
       repositoryUrl: `${github.context.serverUrl}/${github.context.repo.owner}/${github.context.repo.repo}`,
-      tagFormat: 'v${version}'
+      tagFormat: 'v${version}',
+      plugins: [
+        '@semantic-release/commit-analyzer',
+        '@semantic-release/release-notes-generator',
+        '@semantic-release/changelog',
+        '@semantic-release/github'
+      ]
     };
 
     // Set up environment variables
