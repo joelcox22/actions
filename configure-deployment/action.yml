@@ -22,7 +22,7 @@ runs:
         path: gitops-repo
 
     - shell: bash
-      run: ${{ github.action_path }}/test.ts
+      run: ${{ github.action_path }}/configure-deployment.ts
 
     - shell: bash
       working-directory: gitops-repo
