@@ -1,6 +1,9 @@
 {
   "imports": {
-    "@std/path": "jsr:@std/path@1",
-    "@std/yaml": "jsr:@std/yaml@1"
+    "@actions/core": "npm:@actions/core@^1.11.1",
+    "@actions/github": "npm:@actions/github@^6.0.1",
+    "@std/path": "jsr:@std/path@^1.1.2",
+    "@std/yaml": "jsr:@std/yaml@^1.0.10",
+    "semantic-release": "npm:semantic-release@^24.2.9"
   }
 }

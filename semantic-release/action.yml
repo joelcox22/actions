@@ -29,6 +29,8 @@ outputs:
     description: 'Whether a new release will be created (from dry-run analysis)'
 
 runs:
-  using: 'node24'
-  main: 'dist/index.cjs'
-  post: 'dist/index.cjs'
+  using: 'composite'
+  steps:
+    - name: semantic-release
+      shell: bash
+      run: ${{ github.action_path }}/index.ts

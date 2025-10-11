@@ -1,28 +1,15 @@
 # Semantic Release Action
 
+GitHub Action that runs semantic-release with minimal configuration required from the calling repository.
 
-This is a JavaScript GitHub Action that runs semantic-release with minimal configuration required from the calling repository. All dependencies are bundled so no npm install is needed at runtime.
+It first runs in dry-run mode when the action is called, which creates action outputs with the planned new version information.
+Then the rest of your actions workflow runs, and if successful, the **__actual__** semantic-release run is executed in
+the post hook, which publishes version tags and artifacts.
 
-## Building the Action
+This setup works nicely, because your build steps can bundle in the planned version number easily, but
+if a build step fails, the release won't actually get published.
 
-Before committing changes, bundle the action and its dependencies using [esbuild](https://esbuild.github.io/):
-
-```bash
-npm run build
-```
-
-This will generate a `dist` directory containing the bundled code. Commit the contents of `dist` to your repository so users do not need to run `npm install`.
-
-## Development Setup
-
-1. Make changes to `index.js` or dependencies in `package.json`.
-2. Run `npm run build` to update the bundle.
-3. Commit both your source changes and the updated `dist` directory.
-
-## Usage
-
-
-### Basic Usage
+## Basic Usage
 
 ```yaml
 name: Release
