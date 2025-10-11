@@ -12,7 +12,6 @@ runs:
       with:
         deno-version: v2.x
         cache: true
-        cacheHash: ${{ hashFiles('${{ github.action_path }}/../deno.lock') }}
 
     - name: install action dependencies
       shell: bash
