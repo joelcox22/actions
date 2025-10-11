@@ -23,6 +23,6 @@ try {
     console.log('No existing config file');
 }
 
-config.image = `ghcr.io/${owner}/${repoName}:${Deno.env.get('GITHUB_SHA')}`;
+config.image = `ghcr.io/${owner}/${repoName}:${Deno.env.get('NEW_RELEASE_VERSION')}`;
 
 Deno.writeTextFile(join(dir, 'values.yml'), yaml.stringify(config));
