@@ -31,3 +31,4 @@ outputs:
 runs:
   using: 'node24'
   main: 'index.js'
+  post: 'index.js'
